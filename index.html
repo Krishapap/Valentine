@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Boyfriend Quiz 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .quiz-box {
+      background: white;
+      padding: 25px;
+      border-radius: 25px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      text-align: center;
+    }
+
+    h1 {
+      color: #ff4d6d;
+      font-size: 24px;
+    }
+
+    .question {
+      font-size: 18px;
+      margin: 20px 0;
+      color: #333;
+    }
+
+    .option {
+      background: #ffe3ec;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .option:hover {
+      background: #ff4d6d;
+      color: white;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      background: #ff4d6d;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      display: none;
+    }
+
+    .result {
+      display: none;
+      font-size: 18px;
+      color: #ff4d6d;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="quiz-box">
+  <h1>💖 Boyfriend Test 💖</h1>
+
+  <div class="question" id="question"></div>
+
+  <div id="options"></div>
+
+  <button id="nextBtn">Next ➡️</button>
+
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+  const quiz = [
+    {
+      q: "What is my favorite way to spend time with you? 😌",
+      options: ["Watching movies", "Long talks", "Going out", "All of the above 😏"],
+      answer: 3
+    },
+    {
+      q: "What annoys me the MOST? 😤",
+      options: ["When you're late", "When you don't text", "When you tease me", "Nothing, I'm perfect 😇"],
+      answer: 1
+    },
+    {
+      q: "Who loves more in this relationship? 💕",
+      options: ["You", "Me", "Both equally", "Obviously YOU 😍"],
+      answer: 3
+    },
+    {
+      q: "What would I choose first? 👀",
+      options: ["Food 🍕", "Sleep 😴", "You ❤️", "Phone 📱"],
+      answer: 2
+    },
+    {
+      q: "Final question 😏 Will you be my forever?",
+      options: ["Yes 💖", "YES 😍", "Of course 🥺", "No (wrong answer 💀)"],
+      answer: 0
+    }
+  ];
+
+  let current = 0;
+  let score = 0;
+
+  const questionEl = document.getElementById("question");
+  const optionsEl = document.getElementById("options");
+  const nextBtn = document.getElementById("nextBtn");
+  const resultEl = document.getElementById("result");
+
+  function loadQuestion() {
+    questionEl.textContent = quiz[current].q;
+    optionsEl.innerHTML = "";
+    nextBtn.style.display = "none";
+
+    quiz[current].options.forEach((opt, index) => {
+      const div = document.createElement("div");
+      div.classList.add("option");
+      div.textContent = opt;
+      div.onclick = () => selectOption(index);
+      optionsEl.appendChild(div);
+    });
+  }
+
+  function selectOption(index) {
+    if (index === quiz[current].answer) {
+      score++;
+    }
+    nextBtn.style.display = "block";
+  }
+
+  nextBtn.onclick = () => {
+    current++;
+    if (current < quiz.length)
